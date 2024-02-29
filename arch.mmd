@@ -1,0 +1,12 @@
+```mermaid
+graph LR
+    A[User Interface Web Form] --> B{Data Submission}
+    B --> C{Power BI}
+    C --> D{Data Transformation}
+    D --> E{API Connection}
+    E --> F{Azure ML Model}
+    F --> G{Predictions}
+    G --> C
+    C --> H{Data Visualization}
+    H --> A(Optional)
+```
