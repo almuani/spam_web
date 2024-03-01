@@ -22,8 +22,6 @@ gdown.download('https://drive.google.com/drive/folders/1REfb8cSmea7qd_KFxOpef0A-
 # model = joblib.load('XGBClassifier_model.joblib')    
 # model = joblib.load('../rf_model.joblib')  
 model = joblib.load('XGBClassifier_model.joblib')
-
-
 # Mapping dictionary
 #type_mapping = {'benign': 0, 'defacement': 1, 'malware': 2, 'phishing': 3}
 # Function to check URL and handle redirects
