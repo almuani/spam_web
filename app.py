@@ -4,6 +4,7 @@ import joblib
 import requests
 import tldextract
 import re
+import os
 from urllib.parse import urlparse
 import ipaddress
 import pandas as pd
@@ -13,13 +14,40 @@ import sys  # Import the sys module
 
 app = Flask(__name__)
 
-# Configure logging to output to the console
-logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+# # Configure logging to output to the console
+# logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
-# Load the model
-logging.info("Loading the model...")
-model = joblib.load('models/XGBClassifier_model.joblib')
-logging.info("Model loaded successfully.")
+# # Load the model
+# logging.info("Loading the model...")
+# model = joblib.load('models/XGBClassifier_model.joblib')
+# logging.info("Model loaded successfully.")
+
+def load_model():
+    # Construct the absolute path to the model file
+    model_path = os.path.join(os.getcwd(), 'models', 'XGBClassifier_model.joblib')
+
+    try:
+        # Load the model
+        model = joblib.load(model_path)
+        logging.info("Model loaded successfully.")
+        return model
+    except Exception as e:
+        logging.error(f"Error loading the model: {str(e)}")
+        return None
+
+if __name__ == "__main__":
+    # Configure logging to output to the console
+    logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+
+    # Load the model
+    model = load_model()
+
+    if model is not None:
+        # Continue with your application logic here
+        pass
+    else:
+        # Handle the case when the model loading fails
+        logging.error("Application cannot proceed without a loaded model.")
 
 # Mapping dictionary
 #type_mapping = {'benign': 0, 'defacement': 1, 'malware': 2, 'phishing': 3}
