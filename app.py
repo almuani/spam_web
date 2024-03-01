@@ -1,3 +1,4 @@
+from io import BytesIO
 from flask import Flask, render_template, request
 import joblib
 import requests
@@ -12,13 +13,23 @@ app = Flask(__name__)
 
 import gdown
 
-# Replace 'YOUR_GOOGLE_DRIVE_FILE_URL' with the shareable link of your file
-gdown.download('https://drive.google.com/drive/folders/1REfb8cSmea7qd_KFxOpef0A-STXPdXF2?usp=drive_link',
-               output='XGBClassifier_model.joblib', quiet=False)
-# Load the XGBoost model from the downloaded file
-# model = joblib.load('XGBClassifier_model.joblib')    
+
+# https://drive.google.com/file/d/1WqMpNjTqww1v1jEDCUOJvevGF0t8Ec-q/view?usp=drive_link
+
+# Replace 'YOUR_GOOGLE_DRIVE_FILE_ID' with the actual file ID of your Google Drive file
+# file_id = '1WqMpNjTqww1v1jEDCUOJvevGF0t8Ec-q'
+# url = f'https://drive.google.com/uc?id={file_id}'
+
+# Download the model file as bytes
+# model_bytes = gdown.download(url, quiet=False)
+
+# Load the model from the bytes
+# model = joblib.load(BytesIO(model_bytes))   
+
 # model = joblib.load('../rf_model.joblib')  
-model = joblib.load('XGBClassifier_model.joblib')
+#model = joblib.load('../XGBClassifier_model.joblib')
+model = joblib.load('models/XGBClassifier_model.joblib')
+
 # Mapping dictionary
 #type_mapping = {'benign': 0, 'defacement': 1, 'malware': 2, 'phishing': 3}
 # Function to check URL and handle redirects
