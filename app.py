@@ -10,9 +10,6 @@ from sklearn.preprocessing import StandardScaler
 
 app = Flask(__name__)
 
-# Load the XGBoost model from the joblib file
-
-
 import gdown
 
 # Replace 'YOUR_GOOGLE_DRIVE_FILE_URL' with the shareable link of your file
