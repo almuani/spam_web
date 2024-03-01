@@ -25,11 +25,13 @@ app = Flask(__name__)
 def load_model():
     model_path = os.path.join(os.getcwd(), 'models', 'XGBClassifier_model.joblib')
     try:
+        # Load the model
         model = joblib.load(model_path)
         logging.info("Model loaded successfully.")
         return model
     except Exception as e:
         logging.error(f"Error loading the model: {str(e)}")
+        logging.error(traceback.format_exc())  # Log the full traceback
         return None
 
 # Load the model
