@@ -11,14 +11,17 @@ from sklearn.preprocessing import StandardScaler
 app = Flask(__name__)
 
 # Load the XGBoost model from the joblib file
-# model = joblib.load('XGBClassifier_model.joblib')    
-# model = joblib.load('../rf_model.joblib')  
+
 
 import gdown
 
 # Replace 'YOUR_GOOGLE_DRIVE_FILE_URL' with the shareable link of your file
 gdown.download('https://drive.google.com/drive/folders/1REfb8cSmea7qd_KFxOpef0A-STXPdXF2?usp=drive_link',
                output='XGBClassifier_model.joblib', quiet=False)
+# Load the XGBoost model from the downloaded file
+# model = joblib.load('XGBClassifier_model.joblib')    
+# model = joblib.load('../rf_model.joblib')  
+model = joblib.load('XGBClassifier_model.joblib')
 
 
 # Mapping dictionary
