@@ -25,7 +25,7 @@ six==1.16.0
 sympy==1.12
 threadpoolctl==3.2.0
 tldextract==5.1.1
-torch==2.1.2+cpu
+torch
 torchaudio==2.1.2+cpu
 torchvision==0.16.2+cpu
 typing_extensions==4.4.0
