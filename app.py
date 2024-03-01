@@ -8,27 +8,18 @@ from urllib.parse import urlparse
 import ipaddress
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
+import logging  # Import the logging module
+import sys  # Import the sys module
 
 app = Flask(__name__)
 
-import gdown
+# Configure logging to output to the console
+logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
-
-# https://drive.google.com/file/d/1WqMpNjTqww1v1jEDCUOJvevGF0t8Ec-q/view?usp=drive_link
-
-# Replace 'YOUR_GOOGLE_DRIVE_FILE_ID' with the actual file ID of your Google Drive file
-# file_id = '1WqMpNjTqww1v1jEDCUOJvevGF0t8Ec-q'
-# url = f'https://drive.google.com/uc?id={file_id}'
-
-# Download the model file as bytes
-# model_bytes = gdown.download(url, quiet=False)
-
-# Load the model from the bytes
-# model = joblib.load(BytesIO(model_bytes))   
-
-# model = joblib.load('../rf_model.joblib')  
-#model = joblib.load('../XGBClassifier_model.joblib')
+# Load the model
+logging.info("Loading the model...")
 model = joblib.load('models/XGBClassifier_model.joblib')
+logging.info("Model loaded successfully.")
 
 # Mapping dictionary
 #type_mapping = {'benign': 0, 'defacement': 1, 'malware': 2, 'phishing': 3}
