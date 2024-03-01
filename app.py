@@ -11,7 +11,7 @@ from sklearn.preprocessing import StandardScaler
 app = Flask(__name__)
 
 # Load the XGBoost model from the joblib file
-model = joblib.load('../XGBClassifier_model.joblib')    
+model = joblib.load('XGBClassifier_model.joblib')    
 # model = joblib.load('../rf_model.joblib')  
 
 
