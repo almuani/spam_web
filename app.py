@@ -161,6 +161,8 @@ def home():
 @app.route('/predict', methods=['POST'])
 
 def predict():
+    global model
+
     url = request.form['url']
     
     # Preprocess the input
