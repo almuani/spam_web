@@ -12,18 +12,20 @@ import logging  # Import the logging module
 
 app = Flask(__name__)
 
+# Modify your load_model function
 def load_model():
-    
     model_path = "models/XGBClassifier_model.joblib"
-
     try:
         # Load the model
         model = joblib.load(model_path)
-        logging.info("Model loaded successfully.")
+        app.logger.info("Model loaded successfully.")
         return model
     except Exception as e:
-        logging.error(f"Error loading the model: {str(e)}")
+        app.logger.error(f"Error loading the model: {str(e)}")
         return None
+
+# Add these import statements at the beginning of your app.py
+import traceback
 
 
 # Load the model
@@ -161,33 +163,32 @@ def predict():
     
     # Preprocess the input
     input_data = preprocess_input(url)
-
+    
     if isinstance(input_data, int):
-        print("Error in preprocess_input:", input_data)
+        app.logger.error("Error in preprocess_input:", input_data)
         return render_template('index.html', url=url, prediction="Error in preprocessing")
 
-    # Extract relevant features from the DataFrame
-
-   
     try:
         features = input_data[['abnormal_url', '.', '=', 'letters', 'url_length', 'digits', '?','has_ip_address', '-', '%']].values
     except Exception as e:
-        print("Error extracting features:", str(e))
+        app.logger.error("Error extracting features:", str(e))
         return render_template('index.html', url=url, prediction="Error extracting features")
 
-    # Make a prediction using the loaded XGBoost model
-    prediction = model.predict(features.reshape(1, -1))[0]
+    try:
+        # Make a prediction using the loaded XGBoost model
+        prediction = model.predict(features.reshape(1, -1))[0]
 
-    # Map the prediction to the corresponding class
-    class_mapping = {0: 'Benign', 1: 'Defacement', 2: 'Malware', 3: 'Phishing'}
+        # Map the prediction to the corresponding class
+        class_mapping = {0: 'Benign', 1: 'Defacement', 2: 'Malware', 3: 'Phishing'}
+        predicted_class = class_mapping[int(prediction)]
 
-    predicted_class = class_mapping[int(prediction)]
+        return render_template('index.html', url=url, prediction=predicted_class)
 
-    return render_template('index.html', url=url, prediction=predicted_class)
+    except Exception as e:
+        app.logger.error(f"Error during prediction: {str(e)}")
+        app.logger.error(traceback.format_exc())
+        return render_template('index.html', url=url, prediction="Error during prediction")
+    
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-#'abnormal_url', '.', '=', 'letters', 'url_length', 'digits', '?', 'has_ip_address', '-', '%'
-    
-#'abnormal_url', '.', '=', 'letters', 'url_length', 'digits', '?', 'has_ip_address', '-', '%'pk
