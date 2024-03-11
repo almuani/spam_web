@@ -3,16 +3,13 @@ import joblib
 import requests
 import tldextract
 import re
-import os
 from urllib.parse import urlparse
 import ipaddress
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
-import logging  # Import the logging module
 
 app = Flask(__name__)
 
-# Modify your load_model function
 def load_model():
     model_path = "models/XGBClassifier_model.joblib"
     try:
@@ -24,12 +21,11 @@ def load_model():
         app.logger.error(f"Error loading the model: {str(e)}")
         return None
 
-# Add these import statements at the beginning of your app.py
 import traceback
-
 
 # Load the model
 model = load_model()
+
 
 # Mapping dictionary
 #type_mapping = {'benign': 0, 'defacement': 1, 'malware': 2, 'phishing': 3}
@@ -155,7 +151,6 @@ def home():
     return render_template('index.html')
 
 @app.route('/predict', methods=['POST'])
-
 def predict():
     global model
 
@@ -169,7 +164,7 @@ def predict():
         return render_template('index.html', url=url, prediction="Error in preprocessing")
 
     try:
-        features = input_data[['abnormal_url', '.', '=', 'letters', 'url_length', 'digits', '?','has_ip_address', '-', '%']].values
+        features = input_data[['abnormal_url', '.', '=', 'letters', 'url_length', 'digits', '?', 'has_ip_address', '-', '%']].values
     except Exception as e:
         app.logger.error("Error extracting features:", str(e))
         return render_template('index.html', url=url, prediction="Error extracting features")
@@ -187,7 +182,7 @@ def predict():
     except Exception as e:
         app.logger.error(f"Error during prediction: {str(e)}")
         app.logger.error(traceback.format_exc())
-        return render_template('index.html', url=url, prediction="Error during prediction")
+        return render_template('index.html', url=url, prediction="Error during prediction. Please try again.")
     
 
 if __name__ == '__main__':
