@@ -1,4 +1,3 @@
-from io import BytesIO
 from flask import Flask, render_template, request
 import joblib
 import requests
@@ -10,20 +9,12 @@ import ipaddress
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 import logging  # Import the logging module
-import sys  # Import the sys module
 
 app = Flask(__name__)
 
-# # Configure logging to output to the console
-# logging.basicConfig(stream=sys.stdout, level=logging.INFO)
-
-# # Load the model
-# logging.info("Loading the model...")
-# model = joblib.load('models/XGBClassifier_model.joblib')
-# logging.info("Model loaded successfully.")
-
 def load_model():
-    model_path = os.path.join(os.getcwd(), 'models', 'XGBClassifier_model.joblib')
+    
+    model_path = "models/XGBClassifier_model.joblib"
 
     try:
         # Load the model
